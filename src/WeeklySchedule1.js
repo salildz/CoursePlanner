@@ -6,557 +6,105 @@ import { useData } from "./DataContext";
 const WeeklySchedule1 = () => {
   const { busyData, classroomData, coursesData, servicesData } = useData();
   console.log("data check: ", servicesData);
- 
-  if(servicesData){
-    for (let index = 0; index < servicesData.length; index++) {
-      switch (servicesData[index][1]) {
-        case 'Tuesday':
-          
+  const timeslots = [
+    "8:30",
+    "9:30",
+    "10:30",
+    "11:30",
+    "12:30",
+    "13:30",
+    "14:30",
+    "15:30",
+  ];
+  const scheduleData = {
+    1: {
+      Monday: ["", "", "", "", "", "", "", ""],
+      Tuesday: ["", "", "", "", "", "", "", ""],
+      Wednesday: ["", "", "", "", "", "", "", ""],
+      Thursday: ["", "", "", "", "", "", "", ""],
+      Friday: ["", "", "", "", "", "", "", ""],
+    },
+    2: {
+      Monday: ["", "", "", "", "", "", "", ""],
+      Tuesday: ["", "", "", "", "", "", "", ""],
+      Wednesday: ["", "", "", "", "", "", "", ""],
+      Thursday: ["", "", "", "", "", "", "", ""],
+      Friday: ["", "", "", "", "", "", "", ""],
+    },
+    3: {
+      Monday: ["", "", "", "", "", "", "", ""],
+      Tuesday: ["", "", "", "", "", "", "", ""],
+      Wednesday: ["", "", "", "", "", "", "", ""],
+      Thursday: ["", "", "", "", "", "", "", ""],
+      Friday: ["", "", "", "", "", "", "", ""],
+    },
+    4: {
+      Monday: ["", "", "", "", "", "", "", ""],
+      Tuesday: ["", "", "", "", "", "", "", ""],
+      Wednesday: ["", "", "", "", "", "", "", ""],
+      Thursday: ["", "", "", "", "", "", "", ""],
+      Friday: ["", "", "", "", "", "", "", ""],
+    },
+  };
+
+  if (servicesData) {
+    let classNumber, day, time, timeSlot;
+    for (let i = 0; i < servicesData.length; i++) {
+      switch (servicesData[i][0].match(/\d+/)[0].charAt(0)) {
+        case "1":
+          classNumber = "1";
           break;
-      
+        case "2":
+          classNumber = "2";
+          break;
+        case "3":
+          classNumber = "3";
+          break;
+        case "4":
+          classNumber = "4";
+          return;
         default:
           break;
       }
-    }  
+      day = servicesData[i][1];
+      time = servicesData[i][2].split(',');
+      for (let j = 0; j < time.length; j++) {
+        scheduleData[classNumber][day][timeslots.indexOf(time[j])] = servicesData[i][0];
+      }
+    }
   }
 
-
-    //1123 1=1.sınıf, 1=pazartesi günü, 2=öğleden sonra, 3=günün 2.dersi(1=1.ders, 2=1.dersin kodu, 3= günün 2.dersi)
-    return (
-      <div>
-        <Row> 
-        <Col xs="6">
-        <table className="content-table">
-          <thead>
-            <h3>1. Class</h3>
-            <tr>
-              <th>Day</th>
-              <th>Time</th>
-              <th colSpan="2">1. Class</th>
-              <th colSpan="2">2. Class</th>
-              <th colSpan="2">3. Class</th>
-              <th colSpan="2">4. Class</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th rowSpan="2">Monday</th>
-              <td>Morning</td>
-              <td id="1101">sa</td>
-              <td id="1102">sa2</td>
-              <td id="1103">sa3</td>
-              <td id="1104">sa4</td>
-              <td id="1105">sa5</td>
-              <td id="1106">sa6</td>
-              <td id="1107">sa7</td>
-              <td id="1108">sa8</td>
-            </tr>
-            <tr>
-              <td>Afternoon</td>
-              <td id="1111"></td>
-              <td id="1112"></td>
-              <td id="1113"></td>
-              <td id="1114"></td>
-              <td id="1115"></td>
-              <td id="1116"></td>
-              <td id="1117"></td>
-              <td id="1118"></td>
-            </tr>
-            <tr>
-              <th rowSpan="2">Tuesday</th>
-              <td>Morning</td>
-              <td id="1201"></td>
-              <td id="1202"></td>
-              <td id="1203"></td>
-              <td id="1204"></td>
-              <td id="1205"></td>
-              <td id="1206"></td>
-              <td id="1207"></td>
-              <td id="1208"></td>
-            </tr>
-            <tr>
-              <td>Afternoon</td>
-              <td id="1211"></td>
-              <td id="1212"></td>
-              <td id="1213"></td>
-              <td id="1214"></td>
-              <td id="1215"></td>
-              <td id="1216"></td>
-              <td id="1217"></td>
-              <td id="1218"></td>
-            </tr>
-            <tr>
-              <th rowSpan="2">Wednesday</th>
-              <td>Morning</td>
-              <td id="1301"></td>
-              <td id="1302"></td>
-              <td id="1303"></td>
-              <td id="1304"></td>
-              <td id="1305"></td>
-              <td id="1306"></td>
-              <td id="1307"></td>
-              <td id="1308"></td>
-            </tr>
-            <tr>
-              <td>Afternoon</td>
-              <td id="1311"></td>
-              <td id="1312"></td>
-              <td id="1313"></td>
-              <td id="1314"></td>
-              <td id="1315"></td>
-              <td id="1316"></td>
-              <td id="1317"></td>
-              <td id="1318"></td>
-            </tr>
-            <tr>
-              <th rowSpan="2">Thursday</th>
-              <td>Morning</td>
-              <td id="1401"></td>
-              <td id="1402"></td>
-              <td id="1403"></td>
-              <td id="1404"></td>
-              <td id="1405"></td>
-              <td id="1406"></td>
-              <td id="1407"></td>
-              <td id="1408"></td>
-            </tr>
-            <tr>
-              <td>Afternoon</td>
-              <td id="1411"></td>
-              <td id="1412"></td>
-              <td id="1413"></td>
-              <td id="1414"></td>
-              <td id="1415"></td>
-              <td id="1416"></td>
-              <td id="1417"></td>
-              <td id="1418"></td>
-            </tr>
-            <tr>
-              <th rowSpan="2">Friday</th>
-              <td>Morning</td>
-              <td id="1501"></td>
-              <td id="1502"></td>
-              <td id="1503"></td>
-              <td id="1504"></td>
-              <td id="1505"></td>
-              <td id="1506"></td>
-              <td id="1507"></td>
-              <td id="1508"></td>
-            </tr>
-            <tr>
-              <td>Afternoon</td>
-              <td id="1501"></td>
-              <td id="1502"></td>
-              <td id="1503"></td>
-              <td id="1504"></td>
-              <td id="1505"></td>
-              <td id="1506"></td>
-              <td id="1507"></td>
-              <td id="1508"></td>
-            </tr>
-          </tbody>
-        </table>
-        </Col>
-        <Col xs="6">
-        <table className="content-table">
-          <thead>
-            <h3>2. Class</h3>
-            <tr>
-              <th>Day</th>
-              <th>Time</th>
-              <th colSpan="2">1. Class</th>
-              <th colSpan="2">2. Class</th>
-              <th colSpan="2">3. Class</th>
-              <th colSpan="2">4. Class</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th rowSpan="2">Monday</th>
-              <td>Morning</td>
-              <td id="1101">sa</td>
-              <td id="1102">sa2</td>
-              <td id="1103">sa3</td>
-              <td id="1104">sa4</td>
-              <td id="1105">sa5</td>
-              <td id="1106">sa6</td>
-              <td id="1107">sa7</td>
-              <td id="1108">sa8</td>
-            </tr>
-            <tr>
-              <td>Afternoon</td>
-              <td id="1111"></td>
-              <td id="1112"></td>
-              <td id="1113"></td>
-              <td id="1114"></td>
-              <td id="1115"></td>
-              <td id="1116"></td>
-              <td id="1117"></td>
-              <td id="1118"></td>
-            </tr>
-            <tr>
-              <th rowSpan="2">Tuesday</th>
-              <td>Morning</td>
-              <td id="1201"></td>
-              <td id="1202"></td>
-              <td id="1203"></td>
-              <td id="1204"></td>
-              <td id="1205"></td>
-              <td id="1206"></td>
-              <td id="1207"></td>
-              <td id="1208"></td>
-            </tr>
-            <tr>
-              <td>Afternoon</td>
-              <td id="1211"></td>
-              <td id="1212"></td>
-              <td id="1213"></td>
-              <td id="1214"></td>
-              <td id="1215"></td>
-              <td id="1216"></td>
-              <td id="1217"></td>
-              <td id="1218"></td>
-            </tr>
-            <tr>
-              <th rowSpan="2">Wednesday</th>
-              <td>Morning</td>
-              <td id="1301"></td>
-              <td id="1302"></td>
-              <td id="1303"></td>
-              <td id="1304"></td>
-              <td id="1305"></td>
-              <td id="1306"></td>
-              <td id="1307"></td>
-              <td id="1308"></td>
-            </tr>
-            <tr>
-              <td>Afternoon</td>
-              <td id="1311"></td>
-              <td id="1312"></td>
-              <td id="1313"></td>
-              <td id="1314"></td>
-              <td id="1315"></td>
-              <td id="1316"></td>
-              <td id="1317"></td>
-              <td id="1318"></td>
-            </tr>
-            <tr>
-              <th rowSpan="2">Thursday</th>
-              <td>Morning</td>
-              <td id="1401"></td>
-              <td id="1402"></td>
-              <td id="1403"></td>
-              <td id="1404"></td>
-              <td id="1405"></td>
-              <td id="1406"></td>
-              <td id="1407"></td>
-              <td id="1408"></td>
-            </tr>
-            <tr>
-              <td>Afternoon</td>
-              <td id="1411"></td>
-              <td id="1412"></td>
-              <td id="1413"></td>
-              <td id="1414"></td>
-              <td id="1415"></td>
-              <td id="1416"></td>
-              <td id="1417"></td>
-              <td id="1418"></td>
-            </tr>
-            <tr>
-              <th rowSpan="2">Friday</th>
-              <td>Morning</td>
-              <td id="1501"></td>
-              <td id="1502"></td>
-              <td id="1503"></td>
-              <td id="1504"></td>
-              <td id="1505"></td>
-              <td id="1506"></td>
-              <td id="1507"></td>
-              <td id="1508"></td>
-            </tr>
-            <tr>
-              <td>Afternoon</td>
-              <td id="1501"></td>
-              <td id="1502"></td>
-              <td id="1503"></td>
-              <td id="1504"></td>
-              <td id="1505"></td>
-              <td id="1506"></td>
-              <td id="1507"></td>
-              <td id="1508"></td>
-            </tr>
-          </tbody>
-        </table>
-        </Col>
-        </Row>
-        <Row>
-        <Col xs="6">
-        <table className="content-table">
-        <thead>
-        <h3>3. Class</h3>
-          <tr>
-            <th>Day</th>
-            <th>Time</th>
-            <th colSpan="2">1. Class</th>
-            <th colSpan="2">2. Class</th>
-            <th colSpan="2">3. Class</th>
-            <th colSpan="2">4. Class</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th rowSpan="2">Monday</th>
-            <td>Morning</td>
-            <td id="1101">sa</td>
-            <td id="1102">sa2</td>
-            <td id="1103">sa3</td>
-            <td id="1104">sa4</td>
-            <td id="1105">sa5</td>
-            <td id="1106">sa6</td>
-            <td id="1107">sa7</td>
-            <td id="1108">sa8</td>
-          </tr>
-          <tr>
-            <td>Afternoon</td>
-            <td id="1111"></td>
-            <td id="1112"></td>
-            <td id="1113"></td>
-            <td id="1114"></td>
-            <td id="1115"></td>
-            <td id="1116"></td>
-            <td id="1117"></td>
-            <td id="1118"></td>
-          </tr>
-          <tr>
-            <th rowSpan="2">Tuesday</th>
-            <td>Morning</td>
-            <td id="1201"></td>
-            <td id="1202"></td>
-            <td id="1203"></td>
-            <td id="1204"></td>
-            <td id="1205"></td>
-            <td id="1206"></td>
-            <td id="1207"></td>
-            <td id="1208"></td>
-          </tr>
-          <tr>
-            <td>Afternoon</td>
-            <td id="1211"></td>
-            <td id="1212"></td>
-            <td id="1213"></td>
-            <td id="1214"></td>
-            <td id="1215"></td>
-            <td id="1216"></td>
-            <td id="1217"></td>
-            <td id="1218"></td>
-          </tr>
-          <tr>
-            <th rowSpan="2">Wednesday</th>
-            <td>Morning</td>
-            <td id="1301"></td>
-            <td id="1302"></td>
-            <td id="1303"></td>
-            <td id="1304"></td>
-            <td id="1305"></td>
-            <td id="1306"></td>
-            <td id="1307"></td>
-            <td id="1308"></td>
-          </tr>
-          <tr>
-            <td>Afternoon</td>
-            <td id="1311"></td>
-            <td id="1312"></td>
-            <td id="1313"></td>
-            <td id="1314"></td>
-            <td id="1315"></td>
-            <td id="1316"></td>
-            <td id="1317"></td>
-            <td id="1318"></td>
-          </tr>
-          <tr>
-            <th rowSpan="2">Thursday</th>
-            <td>Morning</td>
-            <td id="1401"></td>
-            <td id="1402"></td>
-            <td id="1403"></td>
-            <td id="1404"></td>
-            <td id="1405"></td>
-            <td id="1406"></td>
-            <td id="1407"></td>
-            <td id="1408"></td>
-          </tr>
-          <tr>
-            <td>Afternoon</td>
-            <td id="1411"></td>
-            <td id="1412"></td>
-            <td id="1413"></td>
-            <td id="1414"></td>
-            <td id="1415"></td>
-            <td id="1416"></td>
-            <td id="1417"></td>
-            <td id="1418"></td>
-          </tr>
-          <tr>
-            <th rowSpan="2">Friday</th>
-            <td>Morning</td>
-            <td id="1501"></td>
-            <td id="1502"></td>
-            <td id="1503"></td>
-            <td id="1504"></td>
-            <td id="1505"></td>
-            <td id="1506"></td>
-            <td id="1507"></td>
-            <td id="1508"></td>
-          </tr>
-          <tr>
-            <td>Afternoon</td>
-            <td id="1501"></td>
-            <td id="1502"></td>
-            <td id="1503"></td>
-            <td id="1504"></td>
-            <td id="1505"></td>
-            <td id="1506"></td>
-            <td id="1507"></td>
-            <td id="1508"></td>
-          </tr>
-        </tbody>
-      </table>
-      </Col>
-      <Col xs="6">
-      <table className="content-table">
-        <thead>
-        <h3>4. Class</h3>
-          <tr>
-            <th>Day</th>
-            <th>Time</th>
-            <th colSpan="2">1. Class</th>
-            <th colSpan="2">2. Class</th>
-            <th colSpan="2">3. Class</th>
-            <th colSpan="2">4. Class</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th rowSpan="2">Monday</th>
-            <td>Morning</td>
-            <td id="1101">sa</td>
-            <td id="1102">sa2</td>
-            <td id="1103">sa3</td>
-            <td id="1104">sa4</td>
-            <td id="1105">sa5</td>
-            <td id="1106">sa6</td>
-            <td id="1107">sa7</td>
-            <td id="1108">sa8</td>
-          </tr>
-          <tr>
-            <td>Afternoon</td>
-            <td id="1111"></td>
-            <td id="1112"></td>
-            <td id="1113"></td>
-            <td id="1114"></td>
-            <td id="1115"></td>
-            <td id="1116"></td>
-            <td id="1117"></td>
-            <td id="1118"></td>
-          </tr>
-          <tr>
-            <th rowSpan="2">Tuesday</th>
-            <td>Morning</td>
-            <td id="1201"></td>
-            <td id="1202"></td>
-            <td id="1203"></td>
-            <td id="1204"></td>
-            <td id="1205"></td>
-            <td id="1206"></td>
-            <td id="1207"></td>
-            <td id="1208"></td>
-          </tr>
-          <tr>
-            <td>Afternoon</td>
-            <td id="1211"></td>
-            <td id="1212"></td>
-            <td id="1213"></td>
-            <td id="1214"></td>
-            <td id="1215"></td>
-            <td id="1216"></td>
-            <td id="1217"></td>
-            <td id="1218"></td>
-          </tr>
-          <tr>
-            <th rowSpan="2">Wednesday</th>
-            <td>Morning</td>
-            <td id="1301"></td>
-            <td id="1302"></td>
-            <td id="1303"></td>
-            <td id="1304"></td>
-            <td id="1305"></td>
-            <td id="1306"></td>
-            <td id="1307"></td>
-            <td id="1308"></td>
-          </tr>
-          <tr>
-            <td>Afternoon</td>
-            <td id="1311"></td>
-            <td id="1312"></td>
-            <td id="1313"></td>
-            <td id="1314"></td>
-            <td id="1315"></td>
-            <td id="1316"></td>
-            <td id="1317"></td>
-            <td id="1318"></td>
-          </tr>
-          <tr>
-            <th rowSpan="2">Thursday</th>
-            <td>Morning</td>
-            <td id="1401"></td>
-            <td id="1402"></td>
-            <td id="1403"></td>
-            <td id="1404"></td>
-            <td id="1405"></td>
-            <td id="1406"></td>
-            <td id="1407"></td>
-            <td id="1408"></td>
-          </tr>
-          <tr>
-            <td>Afternoon</td>
-            <td id="1411"></td>
-            <td id="1412"></td>
-            <td id="1413"></td>
-            <td id="1414"></td>
-            <td id="1415"></td>
-            <td id="1416"></td>
-            <td id="1417"></td>
-            <td id="1418"></td>
-          </tr>
-          <tr>
-            <th rowSpan="2">Friday</th>
-            <td>Morning</td>
-            <td id="1501"></td>
-            <td id="1502"></td>
-            <td id="1503"></td>
-            <td id="1504"></td>
-            <td id="1505"></td>
-            <td id="1506"></td>
-            <td id="1507"></td>
-            <td id="1508"></td>
-          </tr>
-          <tr>
-            <td>Afternoon</td>
-            <td id="1501"></td>
-            <td id="1502"></td>
-            <td id="1503"></td>
-            <td id="1504"></td>
-            <td id="1505"></td>
-            <td id="1506"></td>
-            <td id="1507"></td>
-            <td id="1508"></td>
-          </tr>
-        </tbody>
-      </table>
-      </Col>
+  //1123 1=1.sınıf, 1=pazartesi günü, 2=öğleden sonra, 3=günün 2.dersi(1=1.ders, 2=1.dersin kodu, 3= günün 2.dersi)
+  return (
+    <div>
+      <Row>
+        {Object.keys(scheduleData).map((classNumber) => (
+          <Col key={classNumber}>
+            <h1>{classNumber}. Class</h1>
+            <table className="content-table">
+              <thead>
+                <tr>
+                  <th>Day</th>
+                  {timeslots.map((time, index) => (
+                    <th key={index}>{time}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(scheduleData[classNumber]).map((day) => (
+                  <tr key={day}>
+                    <td>{day}</td>
+                    {scheduleData[classNumber][day].map((className, index) => (
+                      <td key={index}>{className}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Col>
+        ))}
       </Row>
-      </div>
+    </div>
   );
 };
 export default WeeklySchedule1;

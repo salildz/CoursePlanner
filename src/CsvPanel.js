@@ -14,7 +14,8 @@ function CsvPanel() {
     const file = event.target.files[0];
     Papa.parse(file, {
       complete: (result) => {
-        setData(result.data);
+        const nonEmptyRows = result.data.filter(row => row.length > 1);
+        setData(nonEmptyRows);
         setFileSelected(true);
       },
       header: false,
