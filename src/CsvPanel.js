@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 import Papa from "papaparse";
-import { useData } from "./DataContext"; // DataContext'den useData özel kancasını içe aktarın
+import { useData } from "./DataContext";
+import WeeklySchedule1 from "./WeeklySchedule1";
 
 function CsvPanel() {
-  const { busyData, setBusyData, classroomData, setClassroomData, coursesData, setCoursesData, servicesData, setServicesData } = useData();
+  const {
+    busyData,
+    setBusyData,
+    classroomData,
+    setClassroomData,
+    coursesData,
+    setCoursesData,
+    servicesData,
+    setServicesData,
+    generateScheduleSignal,
+    setGenerateScheduleSignal,
+  } = useData();
 
   const [busyFileSelected, setBusyFileSelected] = useState(false);
   const [classroomFileSelected, setClassroomFileSelected] = useState(false);
@@ -14,21 +26,37 @@ function CsvPanel() {
     const file = event.target.files[0];
     Papa.parse(file, {
       complete: (result) => {
-        const nonEmptyRows = result.data.filter(row => row.length > 1);
-        setData(nonEmptyRows);
-        setFileSelected(true);
+        const nonEmptyRows = result.data.filter((row) =>
+          row.some((cell) => cell.trim() !== "")
+        );
+
+        if (setData === setClassroomData) {
+          const processedClassroomData = nonEmptyRows.map((row) =>
+            row[0].split(";")
+          );
+          setData(processedClassroomData);
+          setFileSelected(true);
+        } else {
+          setData(nonEmptyRows);
+          setFileSelected(true);
+        }
       },
       header: false,
     });
   };
 
   const handleCreateSchedule = () => {
-
+    if (busyFileSelected && classroomFileSelected && coursesFileSelected && servicesFileSelected) {
+      setGenerateScheduleSignal(true);
+    } else {
+      alert("Please upload all CSV files.");
+    }
   };
 
   return (
     <div>
-      <label htmlFor="picker1">Busy CSV:</label>
+      <h1>Upload Csv Files</h1>
+      <label htmlFor="picker1">Busy CSV File:</label>
       <input
         type="file"
         accept=".csv"
@@ -36,10 +64,9 @@ function CsvPanel() {
         onChange={(event) =>
           handleFileChange(event, setBusyData, setBusyFileSelected)
         }
-        
         disabled={busyFileSelected}
       />
-      <label htmlFor="picker2">Classroom CSV:</label>
+      <label htmlFor="picker2">Classroom CSV File:</label>
       <input
         type="file"
         accept=".csv"
@@ -49,7 +76,7 @@ function CsvPanel() {
         }
         disabled={classroomFileSelected}
       />
-      <label htmlFor="picker3">Courses CSV:</label>
+      <label htmlFor="picker3">Courses CSV File:</label>
       <input
         type="file"
         accept=".csv"
@@ -59,7 +86,7 @@ function CsvPanel() {
         }
         disabled={coursesFileSelected}
       />
-      <label htmlFor="picker4">Services CSV:</label>
+      <label htmlFor="picker4">Service CSV File:</label>
       <input
         type="file"
         accept=".csv"
@@ -74,7 +101,7 @@ function CsvPanel() {
         <input
           type="button"
           id="uploadFile"
-          value="Create Your Schedule"
+          value="Generate Schedule"
           onClick={handleCreateSchedule}
         />
       </div>

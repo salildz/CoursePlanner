@@ -1,14 +1,14 @@
 import React, { createContext, useContext, useState } from "react";
 
-// Context oluştur
-const DataContext = createContext();
 
-// Verileri sağlayacak veri sağlayıcısı bileşeni
+const DataContext = createContext();
+ 
 export const DataProvider = ({ children }) => {
   const [busyData, setBusyData] = useState([]);
   const [classroomData, setClassroomData] = useState([]);
   const [coursesData, setCoursesData] = useState([]);
   const [servicesData, setServicesData] = useState([]);
+  const [generateScheduleSignal, setGenerateScheduleSignal] = useState(false);
 
   return (
     <DataContext.Provider
@@ -21,6 +21,8 @@ export const DataProvider = ({ children }) => {
         setCoursesData,
         servicesData,
         setServicesData,
+        generateScheduleSignal,
+        setGenerateScheduleSignal,
       }}
     >
       {children}
@@ -28,5 +30,4 @@ export const DataProvider = ({ children }) => {
   );
 };
 
-// Verilere erişimi sağlayacak bir özel kancayı (hook) tanımla
 export const useData = () => useContext(DataContext);
